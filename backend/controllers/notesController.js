@@ -1,12 +1,34 @@
+const mongoose = require('mongoose')
+const password = "" // salainen salasana
+
+const url = `mongodb+srv://henkka:${password}@cluster0.whwvjso.mongodb.net/?retryWrites=true&w=majority`
 const data = {
     Notes: require('../model/list.json'),
     setNotes: function (data) { this.Notes = data }
 }
 
-const getAllNotes = (req, res) => {
-    res.json(data.Notes);
-}
 
+
+
+mongoose.connect(url)
+
+const noteSchema = new mongoose.Schema({
+    _id : Number,
+    content: String,
+    done : Boolean,
+   
+})
+
+const Note = mongoose.model('Note', noteSchema)
+
+const getAllNotes = (req, res) => {
+    
+    Note.find({}).then(result => {
+        res.json(result);
+        mongoose.connection.close()
+      })
+    
+}
 const createNewNote = (req, res) => {
     const newNote = {
         id: data.Notes?.length ? data.Notes[data.Notes.length - 1].id + 1 : 1,
@@ -17,7 +39,17 @@ const createNewNote = (req, res) => {
     if (!newNote.content || !newNote.done) {
         return res.status(400).json({ 'message': 'data missing check request' });
     }
-    console.log(newNote)
+    const notee = new Note({
+        _id: Math.floor(Math.random() * 1000000000),
+        content: req.body.content,
+        done : req.body.done
+    })
+    
+    notee.save().then(result => {
+      console.log('note saved!')
+      mongoose.connection.close()
+    })
+
     data.setNotes([...data.Notes, newNote]);
     res.status(201).json(data.Notes);
 }
