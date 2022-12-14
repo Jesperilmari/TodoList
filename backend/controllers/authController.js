@@ -27,7 +27,7 @@ const handleLogin = async (req, res) => {
     const match = await bcrypt.compare(pwd, foundUser.password);
     if (match) {
         // create JWTs
-        res.json({ 'success': `User ${user} is logged in!` });
+        res.json({ 'success': `User ${user} with  is logged in! id=${foundUser.userid}` });
     } else {
         console.log("salasana ei matchaa")
         res.sendStatus(401);

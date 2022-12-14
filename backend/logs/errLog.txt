@@ -1,0 +1,7 @@
+20221214	21:28:19	10513680-8368-4c43-a3dc-d1a28b7795a8	TypeError: Cannot read properties of undefined (reading 'find')
+20221214	21:30:13	f4194394-7fbe-4c69-8724-4ba30004bea0	TypeError: Converting circular structure to JSON
+    --> starting at object with constructor 'MongoClient'
+    |     property 's' -> object with constructor 'Object'
+    |     property 'sessionPool' -> object with constructor 'ServerSessionPool'
+    --- property 'client' closes the circle
+20221214	21:39:34	d9f35e48-acfd-4899-b369-b26dee4413d5	ReferenceError: yeet is not defined

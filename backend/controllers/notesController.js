@@ -8,12 +8,8 @@ const data = {
 }
 
 
-
-
-mongoose.connect(url)
-
 const noteSchema = new mongoose.Schema({
-    _id : Number,
+    userid:Number,
     content: String,
     done : Boolean,
    
@@ -22,14 +18,16 @@ const noteSchema = new mongoose.Schema({
 const Note = mongoose.model('Note', noteSchema)
 
 const getAllNotes = (req, res) => {
-    
+    mongoose.connect(url)
     Note.find({}).then(result => {
+        test=result
         res.json(result);
         mongoose.connection.close()
       })
     
 }
 const createNewNote = (req, res) => {
+    mongoose.connect(url)
     const newNote = {
         id: data.Notes?.length ? data.Notes[data.Notes.length - 1].id + 1 : 1,
         content: req.body.content,
@@ -40,14 +38,14 @@ const createNewNote = (req, res) => {
         return res.status(400).json({ 'message': 'data missing check request' });
     }
     const notee = new Note({
-        _id: Math.floor(Math.random() * 1000000000),
+        userid:req.body.userid,
         content: req.body.content,
         done : req.body.done
     })
     
     notee.save().then(result => {
       console.log('note saved!')
-      mongoose.connection.close()
+      //mongoose.connection.close()
     })
 
     data.setNotes([...data.Notes, newNote]);
@@ -78,11 +76,19 @@ const deleteNote = (req, res) => {
 }
 
 const getNote = (req, res) => {
-    const Note = data.Notes.find(emp => emp.id === parseInt(req.params.id));
-    if (!Note) {
+    mongoose.connect(url)
+    let yeet
+   Note.find({}).then(result => {
+    console.log(result[2].userid)
+    yeet = result.filter(emp => emp.userid === parseInt(req.params.id))
+    if (!yeet) {
         return res.status(400).json({ "message": `Note ID ${req.params.id} not found` });
     }
-    res.json(Note);
+    res.json(yeet);
+   // mongoose.connection.close()
+    
+  })
+
 }
 
 module.exports = {

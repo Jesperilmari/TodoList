@@ -25,6 +25,7 @@ const handleNewUser = async (req, res) => {
         //store the new user
         const newUser = { "username": user, "password": hashedPwd };
         const useri = new User({
+            userid: Math.floor(Math.random() * 1000000000),
             username: user,
             password: hashedPwd
             
