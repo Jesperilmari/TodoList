@@ -13,6 +13,17 @@ const Register = () => {
 
     const HandleSubmit = (event) => {
         event.preventDefault();
+        let user = email;
+        let pwd = password;
+        //console.log({userEmail})
+        //console.log({userPwd})
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({user, pwd})
+        };
+        fetch('http://localhost:3500/register', requestOptions)
+            .then(response => response.json())
     }
 
     return (
@@ -21,7 +32,7 @@ const Register = () => {
             <h1>Sign up</h1>
                 <Form.Group size="Ig" controlId="email">
                     <Form.Label>Email</Form.Label>
-                    <Form.Control autoFocus type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <Form.Control autoFocus value={email} onChange={(e) => setEmail(e.target.value)} />
                 </Form.Group>
                 <Form.Group size="Ig" controlId="password">
                     <Form.Label>Password</Form.Label>
