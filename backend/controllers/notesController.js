@@ -1,13 +1,33 @@
+const mongoose = require('mongoose')
+const password = "" // salainen salasana
+
+const url = `mongodb+srv://henkka:${password}@cluster0.whwvjso.mongodb.net/?retryWrites=true&w=majority`
 const data = {
     Notes: require('../model/list.json'),
     setNotes: function (data) { this.Notes = data }
 }
 
-const getAllNotes = (req, res) => {
-    res.json(data.Notes);
-}
 
+const noteSchema = new mongoose.Schema({
+    userid:Number,
+    content: String,
+    done : Boolean,
+   
+})
+
+const Note = mongoose.model('Note', noteSchema)
+
+const getAllNotes = (req, res) => {
+    mongoose.connect(url)
+    Note.find({}).then(result => {
+        test=result
+        res.json(result);
+        mongoose.connection.close()
+      })
+    
+}
 const createNewNote = (req, res) => {
+    mongoose.connect(url)
     const newNote = {
         id: data.Notes?.length ? data.Notes[data.Notes.length - 1].id + 1 : 1,
         content: req.body.content,
@@ -17,7 +37,17 @@ const createNewNote = (req, res) => {
     if (!newNote.content || !newNote.done) {
         return res.status(400).json({ 'message': 'data missing check request' });
     }
-    console.log(newNote)
+    const notee = new Note({
+        userid:req.body.userid,
+        content: req.body.content,
+        done : req.body.done
+    })
+    
+    notee.save().then(result => {
+      console.log('note saved!')
+      //mongoose.connection.close()
+    })
+
     data.setNotes([...data.Notes, newNote]);
     res.status(201).json(data.Notes);
 }
@@ -46,11 +76,19 @@ const deleteNote = (req, res) => {
 }
 
 const getNote = (req, res) => {
-    const Note = data.Notes.find(emp => emp.id === parseInt(req.params.id));
-    if (!Note) {
+    mongoose.connect(url)
+    let yeet
+   Note.find({}).then(result => {
+    console.log(result[2].userid)
+    yeet = result.filter(emp => emp.userid === parseInt(req.params.id))
+    if (!yeet) {
         return res.status(400).json({ "message": `Note ID ${req.params.id} not found` });
     }
-    res.json(Note);
+    res.json(yeet);
+   // mongoose.connection.close()
+    
+  })
+
 }
 
 module.exports = {
