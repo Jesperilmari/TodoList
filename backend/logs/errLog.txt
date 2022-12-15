@@ -5,3 +5,5 @@
     |     property 'sessionPool' -> object with constructor 'ServerSessionPool'
     --- property 'client' closes the circle
 20221214	21:39:34	d9f35e48-acfd-4899-b369-b26dee4413d5	ReferenceError: yeet is not defined
+20221215	18:33:13	a5e6d25d-3b3d-4119-9333-3c41044eb1f2	ReferenceError: newNote is not defined
+20221215	18:34:11	c6166be7-5008-4940-8ef1-256364fce060	ReferenceError: data is not defined
