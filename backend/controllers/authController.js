@@ -17,7 +17,7 @@ const handleLogin = async (req, res) => {
         console.log("tietokannasta löytyi käyttäjä")
          foundUser = result.find(person => person.username === user);
          console.log(foundUser)
-         //mongoose.connection.close()
+        
       })
     //const foundUser = usersDB.users.find(person => person.username === user);
     if (!foundUser) {
