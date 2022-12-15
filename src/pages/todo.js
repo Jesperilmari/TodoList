@@ -8,10 +8,10 @@ const Todo = (route) => {
     const [note, setNote] = useState("");
     const [notesArr, setNotesArr] = useState([]);
     const [cehckArr, setCheckArr] = useState([]);
-    
+
     useEffect(() => {
         FetchData();
-     },[]);
+    }, []);
     /*const {state} = useLocation();
     const {id} = state || 1;
     console.log(id);*/
@@ -45,9 +45,22 @@ const Todo = (route) => {
         };
         fetch('http://localhost:3500/notes', requestOptions)
             .then(response => response.json())
-            FetchData();
+        FetchData();
     }
-    
+
+    const ClickHandler = (event) => {
+        event.preventDefault();
+        let id = event.target.id
+        const requestOptions = {
+            method: 'DELETE',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({id})
+        };
+        fetch('http://localhost:3500/notes', requestOptions)
+            .then(response => response.json())
+        FetchData();
+    }
+
     return (
         <>
             <div className="titleWrapper">
@@ -56,9 +69,9 @@ const Todo = (route) => {
             <div className="todo">
                 <>
                     <div className="item">
-                        {notesArr.map(({content, done}) =>
+                        {notesArr.map(({ content, done, _id }) =>
                             <>
-                                <input className="checkbox" type="checkbox" id={content} name={content} value="Bike" checked={done} onClick={ClickHandler}/>
+                                <Button className="checkbox" id={_id} onClick={ClickHandler}>Delete</Button>
                                 <label for={content} className="label">{content}</label>
                                 <br />
                             </>)}
