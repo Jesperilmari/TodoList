@@ -7,3 +7,6 @@
 20221214	21:39:34	d9f35e48-acfd-4899-b369-b26dee4413d5	ReferenceError: yeet is not defined
 20221215	18:33:13	a5e6d25d-3b3d-4119-9333-3c41044eb1f2	ReferenceError: newNote is not defined
 20221215	18:34:11	c6166be7-5008-4940-8ef1-256364fce060	ReferenceError: data is not defined
+20221215	22:16:01	e672d629-d367-40b3-ae53-7e261e638002	ReferenceError: mongodb is not defined
+20221215	22:16:29	070b31c5-d0a7-4076-bb7f-eee29db68bd0	TypeError: Note.ObjectID is not a constructor
+20221215	22:17:46	37375970-876e-44e6-8323-8288f773327b	TypeError: mongoose.ObjectID is not a constructor

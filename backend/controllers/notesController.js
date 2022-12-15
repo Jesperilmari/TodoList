@@ -46,13 +46,22 @@ const updateNote = (req, res) => {
 
 
 const deleteNote = (req, res) => {
+    mongoose.connect(url)
+    Note.deleteOne({_id: req.body.id},function(err) {
+        if (!err) {
+                console.log("ok")
+        }
+        else {
+                console.log(err)
+        }
+    })
+    res.status(200).json(req.body.id+" poistettu");
 }
 
 const getNote = (req, res) => {
     mongoose.connect(url)
     let yeet
    Note.find({}).then(result => {
-    console.log(result[2].userid)
     yeet = result.filter(emp => emp.userid === parseInt(req.params.id))
     if (!yeet) {
         return res.status(400).json({ "message": `Note ID ${req.params.id} not found` });
