@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import {useNavigate, unstable_HistoryRouter } from "react-router-dom";
 
 const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const navigate = useNavigate();
 
     const ValidateForm = () => {
         return email.length > 0 && password.length > 0;
@@ -20,16 +23,20 @@ const Register = () => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({user, pwd})
+            body: JSON.stringify({ user, pwd })
         };
         fetch('http://localhost:3500/register', requestOptions)
             .then(response => response.json())
     }
 
+    const Navigate = () => {
+        navigate("/");
+    }
+
     return (
         <div className="Register">
             <Form onSubmit={HandleSubmit}>
-            <h1>Sign up</h1>
+                <h1>Sign up</h1>
                 <Form.Group size="Ig" controlId="email">
                     <Form.Label>Email</Form.Label>
                     <Form.Control autoFocus value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -40,7 +47,7 @@ const Register = () => {
                 </Form.Group>
                 <Link to="/">Alreaydu have an account? Click here!</Link>
                 <br></br>
-                <Button className="submitBtn" block size="Ig" type="submit" disabled={!ValidateForm()}>
+                <Button onClick={Navigate} className="submitBtn" block size="Ig" type="submit" disabled={!ValidateForm()}>
                     Register
                 </Button>
             </Form>

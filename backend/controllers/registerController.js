@@ -7,7 +7,7 @@ const usersDB = {
 const fsPromises = require('fs').promises;
 const path = require('path');
 const bcrypt = require('bcrypt');
-const password = "" // salainen salasana
+const password = "fullstack" // salainen salasana
 
 const url = `mongodb+srv://henkka:${password}@cluster0.whwvjso.mongodb.net/?retryWrites=true&w=majority`
 
@@ -32,7 +32,7 @@ const handleNewUser = async (req, res) => {
           })
         useri.save().then(result => {
             console.log('tallenettu tietokantaan!')
-            mongoose.connection.close()
+            //mongoose.connection.close()
           })
         usersDB.setUsers([...usersDB.users, newUser]);
         await fsPromises.writeFile(

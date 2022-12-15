@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const User = require('../model/user_model')
 
 const bcrypt = require('bcrypt');
-const password = "" // salainen salasana
+const password = "fullstack" // salainen salasana
 
 const url = `mongodb+srv://henkka:${password}@cluster0.whwvjso.mongodb.net/?retryWrites=true&w=majority`
 
@@ -17,7 +17,7 @@ const handleLogin = async (req, res) => {
         console.log("tietokannasta löytyi käyttäjä")
          foundUser = result.find(person => person.username === user);
          console.log(foundUser)
-        mongoose.connection.close()
+         //mongoose.connection.close()
       })
     //const foundUser = usersDB.users.find(person => person.username === user);
     if (!foundUser) {

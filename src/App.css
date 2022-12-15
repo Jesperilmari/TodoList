@@ -55,38 +55,52 @@ label {
 
 .todo{
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
   flex-direction: column;
   background-color: rgb(82, 149, 243);
-  width: 800px;
+  width: 80%;
   margin: auto;
 }
-.title{
+.form.item{
   display: flex;
-  justify-content: center;
-}
-.item{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 60px;
+  justify-content: left;
   color: white;
 }
-.checkbox{
-  margin-right: 10px;
+.from.addForm{
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
 }
 .addNote{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  margin-top: 10px;
+  display:flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+.checkbox{
+  margin: 10px;
+
 }
 
 .h2{
   margin-top: 10px;
 }
-.label{
+.label.label{
+  padding:5px;
   color: white;
   font-size: 20px;
+}
+.title{
+  display:flex;
+}
+.titleWrapper{
+  display: flex;
+  margin-left: 10%;
+  margin-right: 10%;
+  width: 80%;
 }

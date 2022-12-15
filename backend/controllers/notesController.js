@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const password = "" // salainen salasana
+const password = "fullstack" // salainen salasana
 
 const url = `mongodb+srv://henkka:${password}@cluster0.whwvjso.mongodb.net/?retryWrites=true&w=majority`
 const data = {
