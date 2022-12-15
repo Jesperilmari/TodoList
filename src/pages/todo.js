@@ -1,41 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+
 
 const Todo = (route) => {
 
     const [note, setNote] = useState("");
-
+    const [notesArr, setNotesArr] = useState([]);
+    const [cehckArr, setCheckArr] = useState([]);
+    
+    useEffect(() => {
+        FetchData();
+     },[]);
     /*const {state} = useLocation();
     const {id} = state || 1;
     console.log(id);*/
 
     let id = localStorage.getItem("id")
     console.log(id);
-    
-    const HandleChange = () => {
-        
-    }
-    const fetchData = async (event)=>{
+
+    const FetchData = async (event) => {
         const requestOptions = {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({id})
         };
-        await fetch('http://localhost:3500/notes', requestOptions)
-        .then(response => response.json()).then((data) => {
+        await fetch('http://localhost:3500/notes/' + id, requestOptions)
+            .then(response => response.json()).then((data) => {
                 console.log(data);
-        });
-    }
-    const TodoItems = () => {
-        return (
-            <>
-                <div className="item">
-                    <input className="checkbox" type="checkbox" id="vehicle1" name="vehicle1" value="Bike" onChange={HandleChange} />
-                    <label for="vehicle1" className="label"> I have a bike</label>
-                </div>
-            </>
-        )
+                setNotesArr(data);
+                console.log("notesArr" + notesArr);
+            });
     }
 
     const HandleSubmit = (event) => {
@@ -47,28 +41,38 @@ const Todo = (route) => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({userid, content, done})
+            body: JSON.stringify({ userid, content, done })
         };
         fetch('http://localhost:3500/notes', requestOptions)
             .then(response => response.json())
+            FetchData();
     }
-
+    
     return (
         <>
             <div className="titleWrapper">
                 <h1 className="title">To do</h1>
             </div>
             <div className="todo">
-                <TodoItems />
+                <>
+                    <div className="item">
+                        {notesArr.map(({content, done}) =>
+                            <>
+                                <input className="checkbox" type="checkbox" id={content} name={content} value="Bike" checked={done} onClick={ClickHandler}/>
+                                <label for={content} className="label">{content}</label>
+                                <br />
+                            </>)}
+                    </div>
+                </>
             </div>
             <div className="addNote">
-                <Form onSubmit={HandleSubmit} className="addForm">
+                <Form className="addForm" onSubmit={HandleSubmit}>
                     <h2>Add note</h2>
                     <Form.Group>
                         <Form.Label>Note</Form.Label>
                         <Form.Control autoFocus value={note} onChange={(e) => setNote(e.target.value)} />
                     </Form.Group>
-                    <Button className="submitBtn" block size="Ig" type="submit">Add</Button>
+                    <Button className="submitBtn" block size="Ig" type="submit" onClick={FetchData}>Add</Button>
                 </Form>
             </div>
         </>

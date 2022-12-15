@@ -27,7 +27,8 @@ const createNewNote = (req, res) => {
         content: req.body.content,
         done : req.body.done
     })
-    if (!notee.content || !notee.done) {
+    console.log(notee)
+    if (!notee.content) {
         return res.status(400).json({ 'message': 'data missing check request' });
     }
 
